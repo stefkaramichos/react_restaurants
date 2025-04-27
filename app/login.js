@@ -26,7 +26,8 @@ const Login = () => {
 
       if (response.status === 200) {
         await AsyncStorage.setItem('authToken', data.token);
-        await AsyncStorage.setItem('userId', String(data.user.id)); // must be .id from backend
+        await AsyncStorage.setItem('userId', String(data.user.id));
+        await AsyncStorage.setItem('isAdmin', data.user.root_admin === 'Y' ? 'true' : 'false');
         router.push('/dashboard');
       } else {
         setErrorMessage(data.error || 'Login failed');
@@ -72,8 +73,8 @@ const Login = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center', // Centers vertically
-    alignItems: 'center', // Centers horizontally
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#f5f5f5',
   },
   card: {
@@ -82,8 +83,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 20,
     borderRadius: 10,
-    elevation: 5, // Shadow for Android
-    shadowColor: '#000', // Shadow for iOS
+    elevation: 5,
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 5,
